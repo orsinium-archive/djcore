@@ -2,14 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 from sitetree.models import TreeItem
-from project.settings import DEBUG
+from django.conf.settings import DEBUG
 
 
 class DecoratorsMixin:
 	def dispatch(self, *args, **kwargs):
 		decorators = getattr(self, 'decorators', [])
 		base = super(DecoratorsMixin, self).dispatch
-
+		
 		for decorator in decorators:
 			base = decorator(base)
 		return base(*args, **kwargs)
@@ -30,7 +30,7 @@ class PermissionsMixin:
 		
 		if item.access_loggedin:
 			return login_required(base)(request, *args, **kwargs)
-		if item.access_staff:
+		if getattr(item, 'access_staff', None):
 			return staff_member_required(base)(request, *args, **kwargs)
 		
 		return base(request, *args, **kwargs)
