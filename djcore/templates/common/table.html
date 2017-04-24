@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% load render_table from django_tables2 %}
+	{% if table %}
+		{% render_table table %}
+	{% else %}
+		{% render_table objects %}
+	{% endif %}
+	{% include 'components/pagination.html' %}
+{% endblock %}
