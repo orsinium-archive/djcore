@@ -1,3 +1,0 @@
-unidecode
-django-tables2
-django-sitetree
