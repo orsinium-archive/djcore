@@ -1,0 +1,8 @@
+LICENSE
+MANIFEST.in
+README.md
+djcore/__init__.py
+djcore.egg-info/PKG-INFO
+djcore.egg-info/SOURCES.txt
+djcore.egg-info/dependency_links.txt
+djcore.egg-info/top_level.txt

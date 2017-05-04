@@ -1,10 +1,17 @@
-from django.core import mail
-from project.settings import EMAIL_USERNAME, EMAIL_HOST_USER
+from html.parser import HTMLParser
 
+from django.core import mail
 from django.template import Context, loader
 from django.test.client import Client
 
-from html.parser import HTMLParser
+try:
+	from django.conf import settings
+	EMAIL_USERNAME = settings.EMAIL_USERNAME
+	EMAIL_HOST_USER = settings.EMAIL_HOST_USER
+except ImportError:
+	import warnings
+	warnings.warn("Can't find email settings EMAIL_USERNAME and EMAIL_HOST_USER")
+	EMAIL_USERNAME, EMAIL_HOST_USER = '', ''
 
 
 class MLStripper(HTMLParser):

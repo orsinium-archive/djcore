@@ -1,11 +1,20 @@
 from django.template.defaultfilters import slugify
-from unidecode import unidecode
+try:
+	from unidecode import unidecode
+except ImportError:
+	import warnings
+	unidecode = False
+	warnings.warn("Module unidecode isn't available.")
+
 
 from collections import namedtuple
 Field = namedtuple('Field', ['name', 'verbose_name', 'value'])
 
+
 def make_slug(title, model=False):
-	out_slug = base_slug = slugify(unidecode(title))
+	if unidecode:
+		title = unidecode(title)
+	out_slug = base_slug = slugify(title)
 	counter = 2
 	
 	if not model:

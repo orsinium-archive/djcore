@@ -1,7 +1,8 @@
+from urllib.parse import quote, unquote
+
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django_tables2 import *
-from urllib.parse import quote, unquote
 
 
 class IntegerColumn(Column):
