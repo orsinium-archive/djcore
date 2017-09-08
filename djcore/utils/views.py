@@ -6,9 +6,9 @@ from .inc.cache import cache_page, cache_by_key
 
 from .inc.mail import Email
 from .inc.common_views import (
-	DecoratorsMixin, InfoView, ListView, TemplateView,
-	DeleteView, AddView, EditView, FormView,
-	)
+    DecoratorsMixin, InfoView, ListView, TemplateView,
+    DeleteView, AddView, EditView, FormView,
+    )
 from .inc.hooks4views import make_slug, flat_object
 
 from django.contrib.auth.decorators import login_required
