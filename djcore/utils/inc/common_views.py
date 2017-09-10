@@ -8,7 +8,7 @@ from .mixins import DecoratorsMixin, PermissionsMixin
 
 
 class ListView(PermissionsMixin, DecoratorsMixin, generic.ListView):
-    template_name = 'common/table.html'
+    template_name = 'djcore/common/table.html'
     context_object_name = 'objects'
     
     def get_queryset(self, *args, **kwargs):
@@ -30,7 +30,7 @@ class ListView(PermissionsMixin, DecoratorsMixin, generic.ListView):
 
 
 class InfoView(PermissionsMixin, DecoratorsMixin, generic.DetailView):
-    template_name = 'common/info.html'
+    template_name = 'djcore/common/info.html'
     context_object_name = 'object'
     excluded_fields = ('id', 'slug', 'image', 'file')
     
@@ -41,7 +41,7 @@ class InfoView(PermissionsMixin, DecoratorsMixin, generic.DetailView):
 
 
 class DeleteView(PermissionsMixin, DecoratorsMixin, generic.edit.DeleteView):
-    template_name = 'common/delete.html'
+    template_name = 'djcore/common/delete.html'
     
     def post(self, request, *args, **kwargs):
         if self.request.POST.get('confirm_delete'):
@@ -53,15 +53,15 @@ class DeleteView(PermissionsMixin, DecoratorsMixin, generic.edit.DeleteView):
 
 
 class AddView(PermissionsMixin, DecoratorsMixin, generic.edit.CreateView):
-    template_name = 'common/add.html'
+    template_name = 'djcore/common/add.html'
 
 
 class EditView(PermissionsMixin, DecoratorsMixin, generic.edit.UpdateView):
-    template_name = 'common/edit.html'
+    template_name = 'djcore/common/edit.html'
 
 
 class FormView(PermissionsMixin, DecoratorsMixin, generic.edit.FormView):
-    template_name = 'common/add.html'
+    template_name = 'djcore/common/add.html'
 
 
 class TemplateView(PermissionsMixin, DecoratorsMixin, generic.base.TemplateView):

@@ -1,4 +1,4 @@
-from functools import wraps
+from functools import update_wrapper
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -16,10 +16,13 @@ class DecoratorsMixin:
     def dispatch(self, *args, **kwargs):
         decorators = getattr(self, 'decorators', [])
         first_base = base = super(DecoratorsMixin, self).dispatch
+        if not decorators:
+            return base(*args, **kwargs)
         
         for decorator in decorators:
             base = decorator(base)
-        #base = wraps(first_base)(base)
+        #take possible attributes set by decorators like csrf_exempt
+        base = update_wrapper(base, first_base, assigned=())
         
         return base(*args, **kwargs)
 

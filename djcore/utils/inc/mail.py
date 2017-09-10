@@ -8,7 +8,7 @@ try:
     from django.conf import settings
     EMAIL_USERNAME = settings.EMAIL_USERNAME
     EMAIL_HOST_USER = settings.EMAIL_HOST_USER
-except ImportError:
+except (ImportError, AttributeError):
     import warnings
     warnings.warn("Can't find email settings EMAIL_USERNAME and EMAIL_HOST_USER")
     EMAIL_USERNAME, EMAIL_HOST_USER = '', ''

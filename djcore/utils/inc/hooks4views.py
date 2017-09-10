@@ -35,3 +35,26 @@ def flat_object(obj, excluded=''):
         value = field.value_from_object(obj)
         result.append(Field(field.attname, field.verbose_name, value))
     return result
+
+
+class ChainedQueryset:
+    
+    def __init__(self, *querysets):
+        self.querysets = querysets
+        self._count = sum([q.count() for q in querysets])
+    
+    def count(self):
+        return self._count
+    
+    def __len__(self):
+        return self._count
+    
+    def __list__(self):
+        return sum(map(list, self.querysets), [])
+    
+    def iterator(self):
+        for  queryset in self.querysets:
+            yield from queryset.iterator()
+    
+    def __getitem__(self, index):
+        return self.__list__()[index]

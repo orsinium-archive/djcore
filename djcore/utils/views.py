@@ -9,7 +9,7 @@ from .inc.common_views import (
     DecoratorsMixin, InfoView, ListView, TemplateView,
     DeleteView, AddView, EditView, FormView,
     )
-from .inc.hooks4views import make_slug, flat_object
+from .inc.hooks4views import make_slug, flat_object, ChainedQueryset
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
