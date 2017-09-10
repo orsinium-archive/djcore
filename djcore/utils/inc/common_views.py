@@ -5,10 +5,10 @@ from django.http import HttpResponseRedirect
 from django_tables2 import RequestConfig
 
 from .hooks4views import flat_object
-from .mixins import DecoratorsMixin, PermissionsMixin
+from .mixins import AllMixins
 
 
-class ListView(PermissionsMixin, DecoratorsMixin, generic.ListView):
+class ListView(AllMixins, generic.ListView):
     context_object_name = 'objects'
     
     def get_template_names(self):
@@ -31,7 +31,7 @@ class ListView(PermissionsMixin, DecoratorsMixin, generic.ListView):
         return context
 
 
-class InfoView(PermissionsMixin, DecoratorsMixin, generic.DetailView):
+class InfoView(AllMixins, generic.DetailView):
     context_object_name = 'object'
     excluded_fields = ('id', 'slug', 'image', 'file')
     
@@ -50,7 +50,7 @@ class InfoView(PermissionsMixin, DecoratorsMixin, generic.DetailView):
         return context
 
 
-class DeleteView(PermissionsMixin, DecoratorsMixin, generic.edit.DeleteView):
+class DeleteView(AllMixins, generic.edit.DeleteView):
     def get_template_names(self):
         if self.template_name is None:
             if getattr(settings, 'DJCORE_USE_BOOTSTRAP4', False):
@@ -69,7 +69,7 @@ class DeleteView(PermissionsMixin, DecoratorsMixin, generic.edit.DeleteView):
             return self.get(self, *args, **kwargs)
 
 
-class AddView(PermissionsMixin, DecoratorsMixin, generic.edit.CreateView):
+class AddView(AllMixins, generic.edit.CreateView):
     def get_template_names(self):
         if self.template_name is None:
             if getattr(settings, 'DJCORE_USE_BOOTSTRAP4', False):
@@ -80,7 +80,7 @@ class AddView(PermissionsMixin, DecoratorsMixin, generic.edit.CreateView):
             return [self.template_name]
 
 
-class EditView(PermissionsMixin, DecoratorsMixin, generic.edit.UpdateView):
+class EditView(AllMixins, generic.edit.UpdateView):
     def get_template_names(self):
         if self.template_name is None:
             if getattr(settings, 'DJCORE_USE_BOOTSTRAP4', False):
@@ -91,7 +91,7 @@ class EditView(PermissionsMixin, DecoratorsMixin, generic.edit.UpdateView):
             return [self.template_name]
 
 
-class FormView(PermissionsMixin, DecoratorsMixin, generic.edit.FormView):
+class FormView(AllMixins, generic.edit.FormView):
     def get_template_names(self):
         if self.template_name is None:
             if getattr(settings, 'DJCORE_USE_BOOTSTRAP4', False):
@@ -102,5 +102,5 @@ class FormView(PermissionsMixin, DecoratorsMixin, generic.edit.FormView):
             return [self.template_name]
 
 
-class TemplateView(PermissionsMixin, DecoratorsMixin, generic.base.TemplateView):
+class TemplateView(AllMixins, generic.base.TemplateView):
     pass

@@ -3,6 +3,18 @@ from functools import update_wrapper
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
+from django.http import HttpResponse
+
+
+try:
+    from django.core.serializers import serialize
+except ImportError:
+    from json import dumps
+    json_serialize = dumps
+else:
+    from functools import partial
+    json_serialize = partial(serialize, 'json')
+
 
 try:
     from sitetree.models import TreeItem
@@ -12,7 +24,7 @@ except (ImportError, RuntimeError):
     TreeItem = False
 
 
-class DecoratorsMixin:
+class DecoratorsMixin(object):
     def dispatch(self, *args, **kwargs):
         decorators = getattr(self, 'decorators', [])
         first_base = base = super(DecoratorsMixin, self).dispatch
@@ -27,7 +39,7 @@ class DecoratorsMixin:
         return base(*args, **kwargs)
 
 
-class PermissionsMixin:
+class PermissionsMixin(object):
     def dispatch(self, request, *args, **kwargs):
         base = super(PermissionsMixin, self).dispatch
         
@@ -48,3 +60,24 @@ class PermissionsMixin:
             return staff_member_required(base)(request, *args, **kwargs)
         
         return base(request, *args, **kwargs)
+
+
+class JsonMixin(object):
+    render_to_json = False
+    
+    def render_to_response(self, context):
+        if self.render_to_json:
+            data = json_serialize(context)
+            return HttpResponse(data, content_type='application/json')
+        else:
+            super().render_to_response(context)
+    
+    @classmethod
+    def as_json(cls):
+        view = cls.as_view()
+        view.render_to_json = True
+        return view
+
+
+class AllMixins(PermissionsMixin, DecoratorsMixin, JsonMixin):
+    pass
