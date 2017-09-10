@@ -1,0 +1,15 @@
+{% load bootstrap4 %}
+{% bootstrap_form_errors form layout='inline' %}
+
+<form method="POST" class="form-horizontal" role="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "ok" %} {{ submit_name|default:"готово" }}
+        </button>
+    {% endbuttons %}
+</form>
