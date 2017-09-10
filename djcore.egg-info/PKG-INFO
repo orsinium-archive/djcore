@@ -7,11 +7,23 @@ Author: orsinium
 Author-email: master_fess@mail.ru
 License: GNU Lesser General Public License v3.0
 Download-URL: https://github.com/orsinium/djcore/tarball/master
-Description: UNKNOWN
+Description: 
+        ## Features
+        
+        * Абстрагирование от внутреннего устройства Django. Модули в djcore.utils включают в себя всё, что необходимо для построения представлений/моделей/таблиц
+        * Опциональная поддержка django-sitetree, django-tables2
+        * Все основные class based views поддерживают атрибут decorators, позволяющий передавать декораторы для представления
+        * Многие другие полезные функции.
+        
+        
 Keywords: django core utils
 Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
 Classifier: Environment :: Plugins
+Classifier: Framework :: Django
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
 Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development
 Requires: python (>= 3.4)

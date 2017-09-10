@@ -10,10 +10,10 @@ from django.contrib.sites.models import Site
 from .inc.model_fields import CrossForeignKey
 
 try:
-	from ckeditor.fields import RichTextField
+    from ckeditor.fields import RichTextField
 except (ImportError, RuntimeError):
-	import warnings
-	warnings.warn("Module ckeditor isn't available.")
+    import warnings
+    warnings.warn("Module ckeditor isn't available.")
 
 
 CAN_BE_NULL = {'default': None, 'null': True, 'blank': True}
