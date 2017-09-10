@@ -11,13 +11,6 @@ class ListView(PermissionsMixin, DecoratorsMixin, generic.ListView):
     template_name = 'djcore/common/table.html'
     context_object_name = 'objects'
     
-    def get_queryset(self, *args, **kwargs):
-        objects = super(ListView, self).get_queryset(*args, **kwargs)
-        order_by = getattr(self, 'order_by', None)
-        if order_by:
-            return objects.order_by(order_by)
-        return objects
-    
     def get_context_data(self, **kwargs):
         context = super(ListView, self).get_context_data(**kwargs)
         
