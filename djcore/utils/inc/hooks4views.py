@@ -37,6 +37,13 @@ def flat_object(obj, excluded=''):
     return result
 
 
+def get_object_or_none(cls, **kwargs):
+    try:
+        return cls.objects.get(**kwargs)
+    except (cls.DoesNotExist, cls.MultipleObjectsReturned):
+        return None
+
+
 class ChainedQueryset:
     
     def __init__(self, *querysets):

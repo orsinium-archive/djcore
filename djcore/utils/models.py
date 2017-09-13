@@ -17,3 +17,7 @@ except (ImportError, RuntimeError):
 
 
 CAN_BE_NULL = {'default': None, 'null': True, 'blank': True}
+
+
+def now():
+    return timezone.now()
