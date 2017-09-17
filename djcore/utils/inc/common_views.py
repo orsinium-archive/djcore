@@ -104,3 +104,11 @@ class FormView(AllMixins, generic.edit.FormView):
 
 class TemplateView(AllMixins, generic.base.TemplateView):
     pass
+
+
+class RedirectView(AllMixins, generic.base.RedirectView):
+    pass
+
+
+class View(AllMixins, generic.base.View):
+    pass

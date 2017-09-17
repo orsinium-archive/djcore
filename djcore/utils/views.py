@@ -5,8 +5,10 @@ from django.core.urlresolvers import reverse_lazy
 from .inc.cache import cache_page, cache_by_key
 
 from .inc.mail import Email
+from .inc.mixins import DecoratorsMixin, PermissionsMixin, JsonMixin
 from .inc.common_views import (
-    DecoratorsMixin, InfoView, ListView, TemplateView,
+    InfoView, ListView, 
+    TemplateView, View, RedirectView,
     DeleteView, AddView, EditView, FormView,
     )
 from .inc.hooks4views import make_slug, flat_object, ChainedQueryset
