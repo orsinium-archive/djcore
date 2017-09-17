@@ -72,12 +72,14 @@ class PermissionsMixin(object):
 
 class JsonMixin(object):
     render_to_json = False
+    allow_render_to_json = False
     
     def prepare_for_json(self, context):
         return context
     
     def render_to_response(self, context):
-        if self.render_to_json:
+        fmt = self.request.GET.get('format', 'html')
+        if self.render_to_json or (self.allow_render_to_json and fmt == 'json'):
             data = self.prepare_for_json(context)
             data = json_serialize(data)
             return HttpResponse(data, content_type='application/json')
