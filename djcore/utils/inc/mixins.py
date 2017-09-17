@@ -40,6 +40,14 @@ class DecoratorsMixin(object):
 
 
 class PermissionsMixin(object):
+    def login_user(self, request, *args, **kwargs):
+        base = super(PermissionsMixin, self).dispatch
+        return login_required(base)(request, *args, **kwargs)
+    
+    def login_staff(self, request, *args, **kwargs):
+        base = super(PermissionsMixin, self).dispatch
+        return staff_member_required(base)(request, *args, **kwargs)
+    
     def dispatch(self, request, *args, **kwargs):
         base = super(PermissionsMixin, self).dispatch
         
@@ -55,9 +63,9 @@ class PermissionsMixin(object):
             return base(request, *args, **kwargs)
         
         if item.access_loggedin:
-            return login_required(base)(request, *args, **kwargs)
+            return login_user(request, *args, **kwargs)
         if getattr(item, 'access_staff', None):
-            return staff_member_required(base)(request, *args, **kwargs)
+            return login_staff(base)(request, *args, **kwargs)
         
         return base(request, *args, **kwargs)
 
