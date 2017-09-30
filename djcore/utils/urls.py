@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 
 PK = r'(?P<pk>\d+)'
-SLUG = r'(?P<slug>[a-z0-9-]+)'
+SLUG = r'(?P<slug>[-a-zA-Z0-9_]+)'
 
 def pattern(*args):
     return r'^{}/?$'.format('/'.join(args))

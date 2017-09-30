@@ -15,11 +15,11 @@ def make_slug(title, model=False):
     if unidecode:
         title = unidecode(title)
     out_slug = base_slug = slugify(title)
-    counter = 2
     
     if not model:
         return out_slug
     
+    counter = 2
     while model.objects.filter(slug=out_slug).exists():
         out_slug = '{}-{}'.format(base_slug, counter)
         counter += 1

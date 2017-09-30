@@ -40,6 +40,14 @@ class DecoratorsMixin(object):
 
 
 class PermissionsMixin(object):
+    def login_user(self, request, *args, **kwargs):
+        base = super(PermissionsMixin, self).dispatch
+        return login_required(base)(request, *args, **kwargs)
+    
+    def login_staff(self, request, *args, **kwargs):
+        base = super(PermissionsMixin, self).dispatch
+        return staff_member_required(base)(request, *args, **kwargs)
+    
     def dispatch(self, request, *args, **kwargs):
         base = super(PermissionsMixin, self).dispatch
         
@@ -55,19 +63,25 @@ class PermissionsMixin(object):
             return base(request, *args, **kwargs)
         
         if item.access_loggedin:
-            return login_required(base)(request, *args, **kwargs)
+            return login_user(request, *args, **kwargs)
         if getattr(item, 'access_staff', None):
-            return staff_member_required(base)(request, *args, **kwargs)
+            return login_staff(base)(request, *args, **kwargs)
         
         return base(request, *args, **kwargs)
 
 
 class JsonMixin(object):
     render_to_json = False
+    allow_render_to_json = False
+    
+    def prepare_for_json(self, context):
+        return context
     
     def render_to_response(self, context):
-        if self.render_to_json:
-            data = json_serialize(context)
+        fmt = self.request.GET.get('format', 'html')
+        if self.render_to_json or (self.allow_render_to_json and fmt == 'json'):
+            data = self.prepare_for_json(context)
+            data = json_serialize(data)
             return HttpResponse(data, content_type='application/json')
         else:
             super().render_to_response(context)
