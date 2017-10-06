@@ -7,9 +7,7 @@
     {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}
-    {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "ok" %} {{ submit_name|default:"готово" }}
-        </button>
-    {% endbuttons %}
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-ok"></i> {{ submit_name|default:"готово" }}
+    </button>
 </form>
